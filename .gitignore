@@ -1,0 +1,20 @@
+# secrets
+.env
+
+# python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+.uv/
+build/
+dist/
+*.egg-info/
+
+# databases
+*.db
+*.sqlite3
+
+# os
+.DS_Store
+Thumbs.db
