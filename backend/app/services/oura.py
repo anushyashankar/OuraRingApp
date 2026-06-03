@@ -32,13 +32,20 @@ class OuraService:
             "end_date": end.isoformat()
         }
 
+        print(f"DEBUG: Syncing {collection} from {start} to {end}")
+
         async with httpx.AsyncClient() as client:
             response = await client.get(url, headers=self.headers, params=params)
             response.raise_for_status()
+            data = response.json().get("data", [])
+
+            print(f"DEBUG: Found {len(data)} items for {collection}")
             return response.json().get("data", [])
         
     def _process_collection(self, db: Session, collection: str, data: list):
         count = 0
+        from sqlalchemy import select
+        
         for entry in data:
             day = date.fromisoformat(entry["day"])
 
@@ -52,10 +59,20 @@ class OuraService:
             
             for metric_name, value in metrics_to_track:
                 if value is not None:
-                    metric_record = DailyMetric(
-                        day=day, metric=metric_name, value=float(value)
+                    # Check for existing record (Upsert logic)
+                    stmt = select(DailyMetric).where(
+                        DailyMetric.day == day,
+                        DailyMetric.metric == metric_name
                     )
-                    db.add(metric_record)
-                    count += 1
+                    existing = db.execute(stmt).scalar_one_or_none()
+                    
+                    if existing:
+                        existing.value = float(value)
+                    else:
+                        metric_record = DailyMetric(
+                            day=day, metric=metric_name, value=float(value)
+                        )
+                        db.add(metric_record)
+                        count += 1
             
         return count
