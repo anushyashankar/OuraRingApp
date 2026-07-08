@@ -18,3 +18,19 @@ async def chat_with_oura(request: ChatRequest, db: Session = Depends(get_db)):
         return {"answer": answer}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+@router.get("/metrics/summary")
+def get_metrics_summary(db: Session = Depends(get_db)):
+    try:
+        service = IntelligenceService()
+        return service.get_metric_analysis(db)
+    except Exception as e:
+        raise HTTPException(status_code = 500, detail=str(e))
+    
+@router.get("/metrics/correlations")                                                    
+def get_metrics_correlations(db: Session = Depends(get_db)):                            
+    try:                                                                                
+        service = IntelligenceService()                                                 
+        return service.get_correlations_json(db)                                        
+    except Exception as e:                                                              
+        raise HTTPException(status_code=500, detail=str(e))

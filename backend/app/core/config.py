@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     GOOGLE_API_KEY: str
 
     DATABASE_URL: str = "postgresql://postgres:postgres@localhost:5432/oura_db"
-
+    SAMPLE_DATABASE_URL: str = "sqlite:///./sample_oura.db"
     BASELINE_WINDOW_DAYS: int = 30
 
     model_config = SettingsConfigDict(

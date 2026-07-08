@@ -1,0 +1,452 @@
+/* App Container and Header Layout */                                                                                    
+.app-container {                                                                                                         
+  padding: 32px;                                                                                                         
+  max-width: 1200px;                                                                                                     
+  margin: 0 auto;                                                                                                        
+  display: flex;                                                                                                         
+  flex-direction: column;                                                                                                
+  gap: 24px;                                                                                                             
+}                                                                                                                        
+                                                                                                                          
+.app-header {                                                                                                            
+  display: flex;                                                                                                         
+  justify-content: space-between;                                                                                        
+  align-items: center;                                                                                                   
+  border-bottom: 1px solid var(--border);                                                                                
+  padding-bottom: 24px;                                                                                                  
+  flex-wrap: wrap;                                                                                                       
+  gap: 16px;                                                                                                             
+}                                                                                                                        
+                                                                                                                          
+.header-title-section {                                                                                                  
+  text-align: left;                                                                                                      
+}                                                                                                                        
+                                                                                                                          
+.main-title {                                                                                                            
+  margin: 0;                                                                                                             
+  font-size: 32px;                                                                                                       
+  letter-spacing: -0.5px;                                                                                                
+  background: linear-gradient(135deg, var(--text-h) 60%, var(--accent));                                                 
+  -webkit-background-clip: text;                                                                                         
+  -webkit-text-fill-color: transparent;                                                                                  
+}                                                                                                                        
+                                                                                                                          
+.subtitle {                                                                                                              
+  margin: 4px 0 0;                                                                                                       
+  font-size: 14px;                                                                                                       
+  color: var(--text);                                                                                                    
+}                                                                                                                        
+                                                                                                                          
+/* Custom Toggle Switch Slider */                                                                                        
+.controls {                                                                                                              
+  display: flex;                                                                                                         
+  align-items: center;                                                                                                   
+}                                                                                                                        
+                                                                                                                          
+.toggle-container {                                                                                                      
+  display: inline-flex;                                                                                                  
+  align-items: center;                                                                                                   
+  cursor: pointer;                                                                                                       
+  user-select: none;                                                                                                     
+  font-size: 14px;                                                                                                       
+  color: var(--text-h);                                                                                                  
+  font-weight: 500;                                                                                                      
+  gap: 12px;                                                                                                             
+}                                                                                                                        
+                                                                                                                          
+.toggle-container input {                                                                                                
+  position: absolute;                                                                                                    
+  opacity: 0;                                                                                                            
+  width: 0;                                                                                                              
+  height: 0;                                                                                                             
+}                                                                                                                        
+                                                                                                                          
+.toggle-slider {                                                                                                         
+  position: relative;                                                                                                    
+  width: 44px;                                                                                                           
+  height: 24px;                                                                                                          
+  background-color: var(--border);                                                                                       
+  transition: .3s;                                                                                                       
+  border-radius: 24px;                                                                                                   
+}                                                                                                                        
+                                                                                                                          
+.toggle-slider:before {                                                                                                  
+  position: absolute;                                                                                                    
+  content: "";                                                                                                           
+  height: 18px;                                                                                                          
+  width: 18px;                                                                                                           
+  left: 3px;                                                                                                             
+  bottom: 3px;                                                                                                           
+  background-color: white;                                                                                               
+  transition: .3s;                                                                                                       
+  border-radius: 50%;                                                                                                    
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);                                                                             
+}                                                                                                                        
+                                                                                                                          
+.toggle-container input:checked + .toggle-slider {                                                                       
+  background-color: var(--accent);                                                                                       
+}                                                                                                                        
+                                                                                                                          
+.toggle-container input:checked + .toggle-slider:before {                                                                
+  transform: translateX(20px);                                                                                           
+}                                                                                                                        
+                                                                                                                          
+.toggle-label {                                                                                                          
+  font-family: var(--sans);                                                                                              
+}                                                                                                                        
+                                                                                                                          
+/* Dashboard Columns Grid */                                                                                             
+.dashboard-grid {                                                                                                        
+  display: grid;                                                                                                         
+  grid-template-columns: 1.2fr 0.8fr;                                                                                    
+  gap: 32px;                                                                                                             
+  text-align: left;                                                                                                      
+}                                                                                                                        
+                                                                                                                          
+@media (max-width: 1024px) {                                                                                             
+  .dashboard-grid {                                                                                                      
+    grid-template-columns: 1fr;                                                                                          
+    gap: 24px;                                                                                                           
+  }                                                                                                                      
+}                                                                                                                        
+                                                                                                                          
+.section-title {                                                                                                         
+  margin-top: 0;                                                                                                         
+  margin-bottom: 16px;                                                                                                   
+  font-size: 20px;                                                                                                       
+  color: var(--text-h);                                                                                                  
+}                                                                                                                        
+                                                                                                                          
+/* Metrics Section & Grid Cards */                                                                                       
+.metrics-section {                                                                                                       
+  display: flex;                                                                                                         
+  flex-direction: column;                                                                                                
+}                                                                                                                        
+                                                                                                                          
+.metrics-grid {                                                                                                          
+  display: grid;                                                                                                         
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));                                                           
+  gap: 16px;                                                                                                             
+}                                                                                                                        
+                                                                                                                          
+.metric-card {                                                                                                           
+  background: var(--bg);                                                                                                 
+  border: 1px solid var(--border);                                                                                       
+  border-radius: 12px;                                                                                                   
+  padding: 20px;                                                                                                         
+  display: flex;                                                                                                         
+  flex-direction: column;                                                                                                
+  gap: 16px;                                                                                                             
+  box-shadow: var(--shadow);                                                                                             
+  transition: transform 0.2s, box-shadow 0.2s;                                                                           
+}                                                                                                                        
+                                                                                                                          
+.metric-card:hover {                                                                                                     
+  transform: translateY(-2px);                                                                                           
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);                                                                               
+}                                                                                                                        
+                                                                                                                          
+.metric-header {                                                                                                         
+  display: flex;                                                                                                         
+  justify-content: space-between;                                                                                        
+  align-items: center;                                                                                                   
+}                                                                                                                        
+                                                                                                                          
+.metric-title {                                                                                                          
+  font-weight: 600;                                                                                                      
+  font-size: 14px;                                                                                                       
+  color: var(--text-h);                                                                                                  
+}                                                                                                                        
+                                                                                                                          
+.metric-value-container {                                                                                                
+  display: flex;                                                                                                         
+  align-items: baseline;                                                                                                 
+  gap: 4px;                                                                                                              
+}                                                                                                                        
+                                                                                                                          
+.metric-value {                                                                                                          
+  font-size: 40px;                                                                                                       
+  font-weight: 700;                                                                                                      
+  line-height: 1;                                                                                                        
+  color: var(--text-h);                                                                                                  
+}                                                                                                                        
+                                                                                                                          
+.metric-unit {                                                                                                           
+  font-size: 14px;                                                                                                       
+  color: var(--text);                                                                                                    
+}                                                                                                                        
+                                                                                                                          
+.metric-stats {                                                                                                          
+  border-top: 1px solid var(--border);                                                                                   
+  padding-top: 12px;                                                                                                     
+  display: flex;                                                                                                         
+  flex-direction: column;                                                                                                
+  gap: 6px;                                                                                                              
+  font-size: 12px;                                                                                                       
+  color: var(--text);                                                                                                    
+}                                                                                                                        
+                                                                                                                          
+.stat-row {                                                                                                              
+  display: flex;                                                                                                         
+  justify-content: space-between;                                                                                        
+  align-items: center;                                                                                                   
+}                                                                                                                        
+                                                                                                                          
+.z-badge {                                                                                                               
+  font-family: var(--mono);                                                                                              
+  font-weight: 600;                                                                                                      
+  background-color: var(--border);                                                                                       
+  padding: 2px 6px;                                                                                                      
+  border-radius: 4px;                                                                                                    
+  color: var(--text-h);                                                                                                  
+}                                                                                                                        
+                                                                                                                          
+.date-text {                                                                                                             
+  font-family: var(--mono);                                                                                              
+}                                                                                                                        
+                                                                                                                          
+/* Trend Arrow Indicators */                                                                                             
+.trend-arrow {                                                                                                           
+  font-size: 12px;                                                                                                       
+  font-weight: 600;                                                                                                      
+  padding: 2px 6px;                                                                                                      
+  border-radius: 4px;                                                                                                    
+  font-family: var(--mono);                                                                                              
+}                                                                                                                        
+                                                                                                                          
+.trend-up {                                                                                                              
+  color: #10b981;                                                                                                        
+  background-color: rgba(16, 185, 129, 0.1);                                                                             
+}                                                                                                                        
+                                                                                                                          
+.trend-down {                                                                                                            
+  color: #ef4444;                                                                                                        
+  background-color: rgba(239, 68, 68, 0.1);                                                                              
+}                                                                                                                        
+                                                                                                                          
+.trend-flat {                                                                                                            
+  color: var(--text);                                                                                                    
+  background-color: var(--border);                                                                                       
+}                                                                                                                        
+                                                                                                                          
+/* Z-Score Border Color Coding */                                                                                        
+.metric-z-excellent {                                                                                                    
+  border-color: rgba(16, 185, 129, 0.4);                                                                                 
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.05);                                                                       
+}                                                                                                                        
+.metric-z-excellent .z-badge {                                                                                           
+  color: white;                                                                                                          
+  background-color: #10b981;                                                                                             
+}                                                                                                                        
+                                                                                                                          
+.metric-z-good {                                                                                                         
+  border-color: rgba(16, 185, 129, 0.2);                                                                                 
+}                                                                                                                        
+.metric-z-good .z-badge {                                                                                                
+  background-color: rgba(16, 185, 129, 0.15);                                                                            
+  color: #10b981;                                                                                                        
+}                                                                                                                        
+                                                                                                                          
+.metric-z-neutral {                                                                                                      
+  border-color: var(--border);                                                                                           
+}                                                                                                                        
+                                                                                                                          
+.metric-z-warning {                                                                                                      
+  border-color: rgba(245, 158, 11, 0.3);                                                                                 
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.05);                                                                       
+}                                                                                                                        
+.metric-z-warning .z-badge {                                                                                             
+  background-color: rgba(245, 158, 11, 0.15);                                                                            
+  color: #f59e0b;                                                                                                        
+}                                                                                                                        
+                                                                                                                          
+.metric-z-poor {                                                                                                         
+  border-color: rgba(239, 68, 68, 0.4);                                                                                  
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.05);                                                                        
+}                                                                                                                        
+.metric-z-poor .z-badge {                                                                                                
+  color: white;                                                                                                          
+  background-color: #ef4444;                                                                                             
+}                                                                                                                        
+                                                                                                                          
+.loading-spinner, .empty-state {                                                                                         
+  padding: 40px;                                                                                                         
+  text-align: center;                                                                                                    
+  border: 1px dashed var(--border);                                                                                      
+  border-radius: 12px;                                                                                                   
+  color: var(--text);                                                                                                    
+}                                                                                                                        
+
+/* AI Chat Container & Panel Layout */                                                  
+.chat-section {                                                                         
+  display: flex;                                                                        
+  flex-direction: column;                                                               
+}                                                                                       
+                                                                                        
+.chat-container {                                                                       
+  display: flex;                                                                        
+  flex-direction: column;                                                               
+  background: var(--bg);                                                                
+  border: 1px solid var(--border);                                                      
+  border-radius: 12px;                                                                  
+  box-shadow: var(--shadow);                                                            
+  overflow: hidden;                                                                     
+  height: 520px; /* Fixed height for dashboard alignment */                             
+}                                                                                       
+                                                                                        
+/* Chat History & Scroll Area */                                                        
+.chat-messages {                                                                        
+  flex-grow: 1;                                                                         
+  padding: 16px;                                                                        
+  overflow-y: auto;                                                                     
+  display: flex;                                                                        
+  flex-direction: column;                                                               
+  gap: 12px;                                                                            
+  background-color: rgba(244, 243, 236, 0.1);                                           
+}                                                                                       
+                                                                                        
+.chat-welcome {                                                                         
+  margin: auto;                                                                         
+  max-width: 80%;                                                                       
+  text-align: center;                                                                   
+  padding: 24px;                                                                        
+  color: var(--text);                                                                   
+  font-size: 14px;                                                                      
+}                                                                                       
+                                                                                        
+.chat-welcome p {                                                                       
+  margin: 0 0 12px;                                                                     
+}                                                                                       
+                                                                                        
+.chat-welcome .hint {                                                                   
+  font-size: 13px;                                                                      
+  padding: 10px;                                                                        
+  background-color: var(--code-bg);                                                     
+  border-radius: 8px;                                                                   
+  border-left: 3px solid var(--accent);                                                 
+}                                                                                       
+                                                                                        
+/* Message Bubble Alignments & Layouts */                                               
+.chat-message {                                                                         
+  display: flex;                                                                        
+  flex-direction: column;                                                               
+  max-width: 80%;                                                                       
+}                                                                                       
+                                                                                        
+.message-sender {                                                                       
+  font-size: 11px;                                                                      
+  font-weight: 600;                                                                     
+  margin-bottom: 2px;                                                                   
+  color: var(--text);                                                                   
+}                                                                                       
+                                                                                        
+.message-content {                                                                      
+  padding: 10px 14px;                                                                   
+  border-radius: 12px;                                                                  
+  font-size: 14px;                                                                      
+  line-height: 1.4;                                                                     
+  word-break: break-word;                                                               
+}                                                                                       
+                                                                                        
+/* User Message Bubble */                                                               
+.user-message {                                                                         
+  align-self: flex-end;                                                                 
+  align-items: flex-end;                                                                
+}                                                                                       
+.user-message .message-content {                                                        
+  background-color: var(--accent);                                                      
+  color: white;                                                                         
+  border-bottom-right-radius: 2px;                                                      
+}                                                                                       
+                                                                                        
+/* AI Message Bubble */                                                                 
+.ai-message {                                                                           
+  align-self: flex-start;                                                               
+  align-items: flex-start;                                                              
+}                                                                                       
+.ai-message .message-content {                                                          
+  background-color: var(--code-bg);                                                     
+  color: var(--text-h);                                                                 
+  border-bottom-left-radius: 2px;                                                       
+  border: 1px solid var(--border);                                                      
+}                                                                                       
+                                                                                        
+/* Form Layout at Bottom of Chat */                                                     
+.chat-input-form {                                                                      
+  display: flex;                                                                        
+  padding: 12px;                                                                        
+  border-top: 1px solid var(--border);                                                  
+  background-color: var(--bg);                                                          
+  gap: 8px;                                                                             
+}                                                                                       
+                                                                                        
+.chat-input-form input {                                                                
+  flex-grow: 1;                                                                         
+  padding: 10px 14px;                                                                   
+  border: 1px solid var(--border);                                                      
+  border-radius: 8px;                                                                   
+  font-size: 14px;                                                                      
+  background: var(--bg);                                                                
+  color: var(--text-h);                                                                 
+  outline: none;                                                                        
+  transition: border-color 0.2s;                                                        
+}                                                                                       
+                                                                                        
+.chat-input-form input:focus {                                                          
+  border-color: var(--accent);                                                          
+}                                                                                       
+                                                                                        
+.chat-input-form button {                                                               
+  padding: 10px 18px;                                                                   
+  background-color: var(--accent);                                                      
+  color: white;                                                                         
+  border: none;                                                                         
+  border-radius: 8px;                                                                   
+  font-size: 14px;                                                                      
+  font-weight: 600;                                                                     
+  cursor: pointer;                                                                      
+  transition: opacity 0.2s;                                                             
+}                                                                                       
+                                                                                        
+.chat-input-form button:hover:not(:disabled) {                                          
+  opacity: 0.9;                                                                         
+}                                                                                       
+                                                                                        
+.chat-input-form button:disabled {                                                      
+  background-color: var(--border);                                                      
+  color: var(--text);                                                                   
+  cursor: not-allowed;                                                                  
+}                                                                                       
+                                                                                        
+/* Bouncing Dots Loading Animation */                                                   
+.ai-message.loading .message-content {                                                  
+  display: flex;                                                                        
+  align-items: center;                                                                  
+  gap: 4px;                                                                             
+  padding: 12px 16px;                                                                   
+}                                                                                       
+                                                                                        
+.dot {                                                                                  
+  width: 6px;                                                                           
+  height: 6px;                                                                          
+  background-color: var(--text);                                                        
+  border-radius: 50%;                                                                   
+  display: inline-block;                                                                
+  animation: bounce 1.4s infinite ease-in-out both;                                     
+}                                                                                       
+                                                                                        
+.dot:nth-child(1) {                                                                     
+  animation-delay: -0.32s;                                                              
+}                                                                                       
+                                                                                        
+.dot:nth-child(2) {                                                                     
+  animation-delay: -0.16s;                                                              
+}                                                                                       
+                                                                                        
+@keyframes bounce {                                                                     
+  0%, 80%, 100% {                                                                       
+    transform: scale(0);                                                                
+  } 40% {                                                                               
+    transform: scale(1.0);                                                              
+  }                                                                                     
+}  
