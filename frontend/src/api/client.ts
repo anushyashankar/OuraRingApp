@@ -20,7 +20,9 @@ export async function apiFetch(
     });
 
     if (!response.ok) {
-        throw new Error(`API Error: ${response.statusText}`);
+        const err = new Error(`API Error: ${response.statusText}`) as Error & { status?: number };
+        err.status = response.status;
+        throw err;
     }
 
     return response.json();
