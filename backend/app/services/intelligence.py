@@ -322,21 +322,22 @@ class IntelligenceService:
                 "generated_by": "fallback",
             }
 
-        fingerprint = "|".join(
-            f"{s['metric']}:{s['latest_day']}:{s['latest_value']}:{round(s['mean'], 2)}"
-            for s in sorted(stats, key=lambda s: s["metric"])
-        )
-        cached = _BRIEFING_CACHE.get(fingerprint)
-        if cached:
-            return cached
-
         facts = "\n".join(
             f"- {s['friendly_name']} ({METRIC_MEANINGS.get(s['metric'], '')}): "
             f"today {round(s['latest_value'])}, your usual is around {round(s['mean'])}. "
             f"This is {s['level_label']}. Compared with last week it is "
             f"{s['trend_label'] or 'not comparable (not enough history)'}."
-            for s in stats
+            for s in sorted(stats, key=lambda s: s["metric"])
         )
+        days_of_history = max(s["days_of_history"] for s in stats)
+
+        # key on exactly what the model is told. keying on latest value and average
+        # missed changes in spread, which can move a label without moving either --
+        # and a stale briefing would then contradict the cards beneath it.
+        fingerprint = f"{days}|{days_of_history}|{facts}"
+        cached = _BRIEFING_CACHE.get(fingerprint)
+        if cached:
+            return cached
 
         prompt = f"""
         Write a short daily health summary for someone who is not technical and does
@@ -367,7 +368,7 @@ class IntelligenceService:
 
         result = {
             "briefing": text,
-            "days_of_history": max(s["days_of_history"] for s in stats),
+            "days_of_history": days_of_history,
             "generated_by": generated_by,
         }
         # only cache real model output -- a fallback should be retried next load

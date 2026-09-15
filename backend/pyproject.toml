@@ -22,3 +22,15 @@ dev = [
     "black>=24.0",
     "isort>=5.13",
 ]
+
+[tool.pytest.ini_options]
+# only tests/ -- test_sync.py and test_sync_real.py at the root are manual scripts
+# that hit the live Oura API and must never run as part of the suite
+testpaths = ["tests"]
+pythonpath = ["."]
+filterwarnings = [
+    # google.generativeai is deprecated upstream; the notice is noise in test output
+    "ignore:(?s).*google.generativeai:FutureWarning",
+    # fastapi's TestClient re-exports starlette's, which nags about httpx2
+    "ignore:Using `httpx` with `starlette.testclient` is deprecated",
+]
