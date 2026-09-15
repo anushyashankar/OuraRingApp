@@ -1,7 +1,7 @@
 # Oura Ring App
 A full stack app that reads Oura data and explains it to you plainly!
 
-My mom complained about her Oura ring after about a week of wearing it. When I asked her why, she showed me the app. As she scrolled though the various charts and metrics about her sleepy and activity, she said "I don't really know what a lot of this means. Why is it good or bad?"
+My mom complained about her Oura ring after about a week of wearing it. When I asked her why, she showed me the app. As she scrolled through the various charts and metrics about her sleep and activity, she said "I don't really know what a lot of this means. Why is it good or bad?"
 
 Wearable apps tend to hand you a number and leave you to interpret it. A sleep score of 82 means nothing on its own — what matters is whether 82 is normal for you. Complicated words about sleep stages and wake after onset also aren't always accessible. This app computes that comparison against your own history, then uses a language model purely to phrase the result in everyday language.
 
@@ -14,14 +14,14 @@ The statistics are the engine; the model is only the interface. All thresholds a
 4. Explains the result as a short daily briefing and answers follow-up questions in a chat interface, with the statistical vocabulary deliberately banned from the output.
 
 ## Stack
-Backend: FastAPI · SQLAlchemy 2.0 · PostgreSQL · Pydantic · httpx · Gemini 2.5 Flash 
+Backend: FastAPI · SQLAlchemy 2.0 · SQLite (PostgreSQL supported) · Pydantic · httpx · Gemini 2.5 Flash 
 Frontend: React 19 · TypeScript · Vite
 
 ## Setup
 Requirements:
 * Python 3.10+
 * Node 18+
-* PostgreSQL
+* PostgreSQL (optional — SQLite works out of the box)
 * Oura personal access token (cloud.ouraring.com)
 * Google AI Studio API key
 
@@ -30,16 +30,18 @@ Backend:
 cd backend
 uv sync                      
 cp .env.example .env         
-uvicorn app.main:app --reload
+uv run uvicorn app.main:app --reload
 ```
 .env:
 ```
 OURA_ACCESS_TOKEN=your_token
 GOOGLE_API_KEY=your_key
-DATABASE_URL=postgresql://postgres:postgres@localhost:5432/oura_db
+DATABASE_URL=sqlite:///./oura_app.db
 SAMPLE_DATABASE_URL=sqlite:///./sample_oura.db
 BASELINE_WINDOW_DAYS=30
 ```
+to use PostgreSQL instead, set `DATABASE_URL=postgresql://postgres:postgres@localhost:5432/oura_db`.
+
 tables are created on setup. then pull your data:
 ```
 curl -X POST "http://localhost:8000/api/v1/sync?days=30"
@@ -51,11 +53,20 @@ npm install
 npm run dev          # http://localhost:5173
 ```
 
+## Running tests
+```
+cd backend
+uv run --extra dev pytest
+```
+The suite covers the statistics (z-scores, the 7-day change window, correlations), the plain-language labels and their thresholds, the daily briefing's cache and fallback, chat history, and the API routes. It also checks that text the app writes itself never uses the statistical vocabulary banned from the model's output.
+
+Tests never make network calls or touch your data. Gemini is replaced with a fake that records the prompts it receives, the database is in-memory SQLite, and API keys are overridden with dummy values before the app loads. `test_sync.py` and `test_sync_real.py` in `backend/` are manual scripts that call the live Oura API, so they're excluded from the suite.
+
 ## Architecture
 Oura v2 API
     │  async httpx
     ▼
-FastAPI backend ──── SQLAlchemy 2.0 ──── PostgreSQL
+FastAPI backend ──── SQLAlchemy 2.0 ──── SQLite / PostgreSQL
     │                                    (daily_metrics)
     │  computed stats as facts
     ▼
